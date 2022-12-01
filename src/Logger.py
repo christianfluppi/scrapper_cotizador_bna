@@ -1,7 +1,7 @@
 '''
-Created on 8/7/2015
+Created on 28 nov. 2022
 
-@author: gvillada
+@author: Christian Luppi
 '''
 
 import logging
@@ -78,6 +78,4 @@ class Logger(object):
             print("ERROR: \"{} -> {}\".PARA MAS INFO VER EL LOG ({})".format(str(type(e))[7:-2],str(e), self.logname))
             exit(-11)
 
-        
-        
         

@@ -2,7 +2,7 @@
 '''
 Created on 28 nov. 2022
 
-@author: cluppi
+@author: Christian Luppi
 '''
 
 from datetime import datetime
@@ -59,11 +59,6 @@ class Scraper (object):
                             
                             compra = entrada.find('tr').getText()
                             venta = entrada.find('th').getText()
-                            #venta = entrada.find('td', {'class': 'tit'}).getText()
-                            #print(compra)
-                            #print(venta)
-                            #tipoMoneda = entrada.find_all('td', {'class': 'tit'})
-                            #print(tipoMoneda)
                             valores = entrada.find_all('td')
                             
                             for valor in valores:
@@ -89,12 +84,7 @@ class Scraper (object):
                                     #print(f"Promedio Dolar: {promedioDolar}")
                                     promedioFinalDolar = promedioDolar/2
                                     #print(promedioFinalDolar)
-                                    #if promedioDolar == 0:
-                                    #    promedioDolar = promedioDolar + float(montoFinalDolar)
-                                    #else:
-                                    #    print(f"Promedio Dolar: {promedioDolar}")
-                                    #    promedioFinalDolar = promedioDolar/2
-                                    #    #print(promedioFinalDolar)
+                
                                 elif moneda == 'Euro' and 'Euro' not in valor:
                                     monto = str(valor).split("<td>")
                                     monto = str(monto).split("</td>")
@@ -106,12 +96,6 @@ class Scraper (object):
                                     promedioEuro = promedioEuro + float(montoFinalEuro)
                                     promedioFinalEuro = promedioEuro/2
 
-                                    #if promedioEuro == 0:
-                                    #    
-                                    #else:
-                                    #    print(f"Promedio Euro: {promedioEuro}")
-                                    #    
-                                    #    #print(promedioFinalEuro)
                                 elif moneda == 'Real' and 'Real *' not in valor:
                                     monto = str(valor).split("<td>")
                                     monto = str(monto).split("</td>")
@@ -124,15 +108,6 @@ class Scraper (object):
                                     promedioReal = promedioReal + float(montoFinalReal)
                                     promedioFinalReal = promedioReal/2
 
-                                    #if promedioReal == 0:
-                                    #    promedioReal = promedioReal + float(montoFinalReal)
-                                    #else:
-                                    #    print(f"Promedio Real: {promedioReal}")
-                                    #    promedioFinalReal = promedioReal/2
-                                    #    #print(promedioFinalReal)
-                            #print(f"Tipos Monedas: {tipoMonedaDolar} - {tipoMonedaEuro} - {tipoMonedaReal}")
-                            #print(f"Promedios: {promedioFinalDolar} - {promedioFinalEuro} - {promedioFinalReal}")
-                            #fechaCotizacion = fechaCotizacion.split()
                             df = pd.DataFrame(columns=['Día',fechaCotizacion,'a','b'])
                             
                             nuevaFila = pd.DataFrame(columns=['Moneda','Compra','Venta','Promedio'])
@@ -149,18 +124,10 @@ class Scraper (object):
                             writer = ExcelWriter('ejemplo.xlsx')
                             df.to_excel(writer, 'Hoja de datos', index=False)
                             writer.save()
-                            #print (f"%d - %s  |  %s  |  %s" % (i + 1, fechaCotizacion, compra, venta))
-
+                
                 except requests.exceptions.ConnectionError as exc:
                     self.logger.error(f"Error: {exc}")
-                
-                #with open('salida.csv', 'w') as fpOutput:
-                    #print(f"Valores {valores}")
-                    #for i in valores:
-                        #print(i)
-                        #self.logger.info(f"Guardando datos en: {file_path}")
-
-                
+                               
         except(OSError, IOError) as e:
             self.logger.error(f"Error al abrir el archivo {e}")
 
